@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users</title>
+</head>
+
+<body>
+  <button onclick="fetchFR()">Fetch Users FR</button>
+  <button onclick="fetchNL()">Fetch Users NL </button>
+
+  <script>
+    function renderUser({
+      picture: { medium: src }, // Destructuring picture and then medium from it, redeclared as src
+      name,
+      ...rest
+    }) {
+      // I am destructuring user into name and picture,
+      // and in the same line destructuring name into first and last
+      // and picture into medium --> but renaming medium into src
+
+      // NOTE: the other properties of .name are not destructured here, and we are ignoring them...
+
+      console.log(rest) // This will print the object containing the rest of the properties
+      // without name and picture, because we destructured them...
+
+      let div = document.createElement('div')
+      div.innerHTML = `<div>
+                         <img src=${src} />
+                         <div>${name.first} ${name.last}</div>
+                       </div>`
+
+      document.querySelector('body').appendChild(div)
+
+    }
+
+    function renderAPIResults({ results: users }) {
+      // let users = data.results -- we don't need anymore...
+      // ^ this is exactly what we are doing above:
+      // destructuring the propery results and putting inside a variable called users
+
+      for (let user of users) {
+        renderUser(user)
+      }
+    }
+
+    function fetchAndRenderUsers(url) {
+      return fetch(url)
+        .then((response) => response.json())
+        .then((data) => renderAPIResults(data))
+    }
+
+    function fetchFR() {
+      fetchAndRenderUsers("https://randomuser.me/api/?results=50&nat=FR")
+        .then(() => console.log("Printed some FR users"))
+        .catch(() => "Error visualising french users!")
+    }
+
+    function fetchNL() {
+      fetchAndRenderUsers("https://randomuser.me/api/?results=50&nat=NL")
+        .then(() => console.log("Printed some NL users"))
+        .catch(() => "Error visualising NL users!")
+    }
+
+    // IF WE DO AS FOLLOWS, WE DO TWO API CALLS IN PARALLEL, BUT THEY BOTH RECEIVE
+    // AND THEN VISUALIZE USERS IN THE SAME WAY...
+    // // Getting 50 Dutch users and visualizing them
+    // fetch('https://randomuser.me/api/?results=50&nat=NL')
+    //   .then((response) => response.json())
+    //   .then((data) => renderAPIResults(data))
+
+    // // Getting 50 French users and visualizing them
+    // fetch('https://randomuser.me/api/?results=50&nat=FR')
+    //   .then((response) => response.json())
+    //   .then((data) => renderAPIResults(data))
+
+
+  </script>
+</body>
+
+</html>
