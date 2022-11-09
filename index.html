@@ -53,6 +53,13 @@
         .then((data) => renderAPIResults(data))
     }
 
+    // ANOTHER WAY: Passing only the nationality instead of the entire URL
+    // function fetchAndRenderUsersByNL(nat) { // This will be NL/FR/etc.
+    //   return fetch(`https://randomuser.me/api/?results=50&nat=${nat}`)
+    //     .then((response) => response.json())
+    //     .then((data) => renderAPIResults(data))
+    // }
+
     function fetchFR() {
       fetchAndRenderUsers("https://randomuser.me/api/?results=50&nat=FR")
         .then(() => console.log("Printed some FR users"))
