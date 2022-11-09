@@ -56,3 +56,60 @@ let euPrices = arrayOfProductsUS.map((product) => product.priceUSD * 0.99);
 
 console.log("EU converted prices:");
 console.log(euPrices);
+
+// ____________________________________
+
+console.log("REDUCE to sum an array of numbers...");
+const array1 = [1, 2, 3, 4];
+
+// 0 + 1 + 2 + 3 + 4
+const initialValue = 100;
+const sumWithInitial = array1.reduce((sum, currentValue) => {
+  console.log(`Sum: ${sum}`);
+  console.log(`Current: ${currentValue}`);
+  return sum + currentValue;
+}, initialValue);
+
+console.log(sumWithInitial);
+// expected output: 10
+
+// -----------------------------------
+// REDUCE
+console.log("Reduce Cart Price -------------------------");
+
+let cartOfBooks = [
+  { title: "Book 1", price: 10 },
+  { title: "Book 2", price: 12 },
+  { title: "Book 3", price: 23 },
+  { title: "Book 4", price: 5 },
+];
+
+// We need to display the total price of the items in the cart
+// We need to find a way to:
+// start from an array of products...
+// ...and obtain a single number
+
+// We want to reduce our array of products to a single number
+
+let initCartValue = 0;
+let totalPrice = cartOfBooks.reduce(
+  (sum, book) => (sum += book.price), // This is the 1st param of reduce, the callback
+  initCartValue // Initial value of the sum is 0
+);
+
+console.log(cartOfBooks);
+
+console.log("Total price of the cart:");
+console.log(totalPrice);
+
+console.log(
+  "All the names of the product in the cart, concatenated into a single string."
+);
+
+let initialString = "";
+let concatenation = cartOfBooks.reduce(
+  (concatOfNames, book) => concatOfNames.concat(book.title),
+  initialString
+);
+
+console.log(concatenation);
