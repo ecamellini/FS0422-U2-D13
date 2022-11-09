@@ -42,9 +42,11 @@
       // ^ this is exactly what we are doing above:
       // destructuring the propery results and putting inside a variable called users
 
-      for (let user of users) {
-        renderUser(user)
-      }
+      // for (let user of users) {
+      //   renderUser(user)
+      // }
+
+      users.forEach((user) => renderUser(user))
     }
 
     function fetchAndRenderUsers(url) {
