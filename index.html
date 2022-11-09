@@ -49,11 +49,31 @@
       users.forEach((user) => renderUser(user))
     }
 
-    function fetchAndRenderUsers(url) {
-      return fetch(url)
-        .then((response) => response.json())
-        .then((data) => renderAPIResults(data))
+    async function fetchAndRenderUsers(url) {
+      // If you have a function that returns a Promise...
+      // instead of using then --> and passing a callback
+      // you can use await --> put the resulting value in a variable
+      try {
+        const response = await fetch(url)
+        const data = await response.json()
+        renderAPIResults(data)
+        document.querySelector('button').disabled = true // this will disable...only the first button
+      } catch (error) {
+        console.error(error)
+      }
+      // async await they are 2 keywords
+      // they allow us to write async code...
+      // but in way that reminds the classic way of writing sync code...
+
+      // BUT! We need to use try catch to catch for errors
     }
+
+    // Classic usage of Promise
+    // function fetchAndRenderUsers(url) {
+    //   return fetch(url)
+    //     .then((response) => response.json())
+    //     .then((data) => renderAPIResults(data))
+    // }
 
     // ANOTHER WAY: Passing only the nationality instead of the entire URL
     // function fetchAndRenderUsersByNL(nat) { // This will be NL/FR/etc.
